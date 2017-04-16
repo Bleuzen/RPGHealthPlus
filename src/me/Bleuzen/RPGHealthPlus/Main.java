@@ -26,7 +26,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.MetricsLite;
 
 public class Main extends JavaPlugin implements Listener {
 	
@@ -94,10 +93,8 @@ public class Main extends JavaPlugin implements Listener {
 			    cfgReload();
 			    saveConfig();
 			    
-			    try {
-			        MetricsLite metrics = new MetricsLite(this);
-			        metrics.start();
-			    } catch (IOException e) {}
+			    //MetricsLite metrics = 
+			    		new MetricsLite(this);
 				
 			}
 	  	} else {
