@@ -5,6 +5,6 @@ softdepend: [HolographicDisplays]
 description: Adds the ability to levelup your health!
 commands:
   rpghp:
-    description: This is the main command for admins. 
+    description: This is the main command for admins.
   hp:
     description: Shows your progress to the next level.
