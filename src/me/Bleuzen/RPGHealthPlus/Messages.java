@@ -10,15 +10,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Messages {
 	private static File file = new File(Main.getInstance().getDataFolder().getPath(), "messages.yml");
-	private static FileConfiguration mcfg; 
-   	
+	private static FileConfiguration mcfg;
+
 	public static String get(String path) {
 		return mcfg.getString(path);
 	}
-	
+
 	public static void reload() {
 		mcfg = YamlConfiguration.loadConfiguration(file);
-		
+
 		mcfg.addDefault("update-available", "Update is available!");
 		mcfg.addDefault("configuration-reloaded", "Configuration reloaded!");
 		mcfg.addDefault("gethp-command-hearts", "Hearts");
@@ -42,14 +42,14 @@ public class Messages {
 		mcfg.addDefault("help-command-tmphp", "Sets HP temporary");
 		mcfg.addDefault("help-command-addxp", "Adds XP to the targeted player");
 		mcfg.addDefault("help-command-version", "Shows the version of the plugin");
-		
+
 		mcfg.options().copyDefaults(true);
-			
+
 		try {
 			mcfg.save(file);
 		} catch (IOException e) {
 			Main.getInstance().getLogger().log(Level.SEVERE, "Could not save messages to " + file.getAbsolutePath(), e);
 		}
 	}
-	
+
 }

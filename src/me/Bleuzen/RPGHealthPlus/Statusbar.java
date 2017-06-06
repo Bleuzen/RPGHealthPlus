@@ -33,20 +33,20 @@ public class Statusbar implements CommandExecutor {
 						return false;
 					}
 				}
-				
+
 				if(tp != null) {
 					UUID u = tp.getUniqueId();
-					
+
 					int playerhp = Main.getInstance().getplayers().getInt(u + ".hp");
-					
-		            int getmaxhp = Main.getInstance().getGroupsMaxHP(tp);
-		            
+
+					int getmaxhp = Main.getInstance().getGroupsMaxHP(tp);
+
 					if(playerhp >= getmaxhp) {
-						
+
 						sender.sendMessage(ChatColor.DARK_RED + "§l" + Messages.get("statusbar-maximum"));
-						
+
 					} else {
-					
+
 						int percent = (int) (Main.getInstance().getplayers().getDouble(
 								u + ".xp")
 								/ Main.getInstance().getplayers().getDouble(
@@ -58,11 +58,13 @@ public class Statusbar implements CommandExecutor {
 							return false;
 						}
 
-						
+
 						int red = (int) (percent / 2.5);
-						if(red > 40) red = 40;
+						if(red > 40) {
+							red = 40;
+						}
 						int gray = 40 - red;
-						
+
 						StringBuilder xpBar = new StringBuilder();
 
 						if (red > 0) {
@@ -86,14 +88,14 @@ public class Statusbar implements CommandExecutor {
 								+ " / "
 								+ Main.getInstance().getplayers().getInt(u + ".needed") + "  "
 								+ percent + "%" + ChatColor.RED);
-						
+
 						sender.sendMessage(xpBar.toString());
-						
+
 					}
 				} else {
 					sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
 				}
-				
+
 			}
 		}
 		return false;
