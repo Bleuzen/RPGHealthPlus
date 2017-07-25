@@ -54,7 +54,7 @@ public class Commands implements CommandExecutor {
 										return false;
 									}
 									int hp = Main.getInstance().getplayers().getInt(p.getUniqueId() + ".hp");
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + p.getName() + Messages.get("players-hp") + " " + ChatColor.RED + " " + hp + " (" + String.valueOf((Double.valueOf(hp) / 2)).replace(".0", "") + (Main.getInstance().scaleHP ? " (" + Messages.get("scaled-to") + " " + String.valueOf((p.getHealthScale() / 2)).replace(".0", "") + ") " : " ") + Messages.get("gethp-command-hearts") + ")");
+									sender.sendMessage(String.format(Messages.get("players-hp"), p.getName()) + " " + ChatColor.RED + " " + hp + " (" + String.valueOf((Double.valueOf(hp) / 2)).replace(".0", "") + (Main.getInstance().scaleHP ? " (" + Messages.get("scaled-to") + " " + String.valueOf((p.getHealthScale() / 2)).replace(".0", "") + ") " : " ") + Messages.get("gethp-command-hearts") + ")");
 								}
 								else {
 									sender.sendMessage(Messages.get("invalid-player"));

@@ -31,7 +31,7 @@ public class Messages {
 		mcfg.addDefault("help-number", "number");
 		mcfg.addDefault("finished", "&c&lFinished!");
 		mcfg.addDefault("statusbar-maximum", "&4&lMaximum");
-		mcfg.addDefault("players-hp", "'s HP:");
+		mcfg.addDefault("players-hp", "&c&l%s's HP:");
 		mcfg.addDefault("scaled-to", "scaled to");
 		mcfg.addDefault("hp-levelled-up", "&c&lHP levelled up");
 		mcfg.addDefault("hp-and-melee-damage-levelled-up", "&c&lHP and melee damage levelled up");
