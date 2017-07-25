@@ -198,7 +198,7 @@ public class Main extends JavaPlugin implements Listener {
 			Utils.showParticles(p);
 		}
 
-		p.sendMessage(ChatColor.RED +""+  ChatColor.BOLD + "➠ " + (damageMultiplier ? (p.hasPermission("rpghealth.damagemultiplier") ? Messages.get("hp-and-melee-damage-levelled-up") : Messages.get("hp-levelled-up")) : Messages.get("hp-levelled-up")) + "!");
+		p.sendMessage((damageMultiplier ? (p.hasPermission("rpghealth.damagemultiplier") ? Messages.get("hp-and-melee-damage-levelled-up") : Messages.get("hp-levelled-up")) : Messages.get("hp-levelled-up")) + "!");
 	}
 
 	public void expMessage(Location loc, double gained, double needed, double current) {

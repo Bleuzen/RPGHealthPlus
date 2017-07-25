@@ -16,8 +16,7 @@ public class Statusbar implements CommandExecutor {
 			String[] args) {
 		if (label.equalsIgnoreCase("hp")) {
 			if (!sender.hasPermission("rpghealth.hp")) {
-				sender.sendMessage(ChatColor.RED + "" + "" + ChatColor.BOLD
-						+ Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission") + "!");
+				sender.sendMessage(Messages.get("no-permission"));
 			} else {
 				Player tp = null;
 
@@ -29,7 +28,7 @@ public class Statusbar implements CommandExecutor {
 					if (sender.hasPermission("rpghealth.hp.others")) {
 						tp = Bukkit.getPlayer(args[0]);
 					} else {
-						sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+						sender.sendMessage(Messages.get("no-permission"));
 						return false;
 					}
 				}
@@ -43,7 +42,7 @@ public class Statusbar implements CommandExecutor {
 
 					if(playerhp >= getmaxhp) {
 
-						sender.sendMessage(ChatColor.DARK_RED + "§l" + Messages.get("statusbar-maximum"));
+						sender.sendMessage(Messages.get("statusbar-maximum"));
 
 					} else {
 

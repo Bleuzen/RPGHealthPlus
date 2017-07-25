@@ -37,7 +37,7 @@ public class Commands implements CommandExecutor {
 						Main.getInstance().cfgReload();
 						sender.sendMessage(Messages.get("configuration-reloaded"));
 					} else {
-						sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+						sender.sendMessage(Messages.get("no-permission"));
 					}
 				} else
 					if (args[0].equalsIgnoreCase("gethp"))
@@ -54,7 +54,7 @@ public class Commands implements CommandExecutor {
 										return false;
 									}
 									int hp = Main.getInstance().getplayers().getInt(p.getUniqueId() + ".hp");
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + p.getName() + Messages.get("players-hp") + " ➠" + ChatColor.RED + " " + hp + " (" + String.valueOf((Double.valueOf(hp) / 2)).replace(".0", "") + (Main.getInstance().scaleHP ? " (" + Messages.get("scaled-to") + " " + String.valueOf((p.getHealthScale() / 2)).replace(".0", "") + ") " : " ") + Messages.get("gethp-command-hearts") + ")");
+									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + p.getName() + Messages.get("players-hp") + " " + ChatColor.RED + " " + hp + " (" + String.valueOf((Double.valueOf(hp) / 2)).replace(".0", "") + (Main.getInstance().scaleHP ? " (" + Messages.get("scaled-to") + " " + String.valueOf((p.getHealthScale() / 2)).replace(".0", "") + ") " : " ") + Messages.get("gethp-command-hearts") + ")");
 								}
 								else {
 									sender.sendMessage(Messages.get("invalid-player"));
@@ -62,11 +62,11 @@ public class Commands implements CommandExecutor {
 							}
 							else
 							{
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("usage") + " ➠" + ChatColor.RED + "/" + label + " gethp <" + Messages.get("help-player") + ">");
+								sender.sendMessage(Messages.get("invalid-arguments"));
+								sender.sendMessage(Messages.get("help-usage") + " " + ChatColor.RED + "/" + label + " gethp <" + Messages.get("help-player") + ">");
 							}
 						} else {
-							sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+							sender.sendMessage(Messages.get("no-permission"));
 						}
 					}
 					else if (args[0].equalsIgnoreCase("addhp"))
@@ -100,11 +100,11 @@ public class Commands implements CommandExecutor {
 										Main.getInstance().setNeeded(p, Utils.evaluate(Main.getInstance().cfg.getString("configuration.needed-xp-formula").toLowerCase().replace(",", ".").replace("hp", String.valueOf(set))));
 										Main.getInstance().updatehp(p, false);
 										if(sender instanceof Player) {
-											sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + "➠ " + Messages.get("finished") + "!");
+											sender.sendMessage(Messages.get("finished"));
 										}
 									}
 									catch (NumberFormatException x) {
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
+										sender.sendMessage(Messages.get("invalid-arguments"));
 									}
 								} else {
 									sender.sendMessage(Messages.get("invalid-player"));
@@ -112,12 +112,12 @@ public class Commands implements CommandExecutor {
 							}
 							else
 							{
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("usage") + " ➠" + ChatColor.RED + "/" + label + " addhp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
+								sender.sendMessage(Messages.get("invalid-arguments"));
+								sender.sendMessage(Messages.get("help-usage") + " " + ChatColor.RED + "/" + label + " addhp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
 							}
 						}
 						else {
-							sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+							sender.sendMessage(Messages.get("no-permission"));
 						}
 					}
 					else if (args[0].equalsIgnoreCase("sethp"))
@@ -149,11 +149,11 @@ public class Commands implements CommandExecutor {
 										Main.getInstance().setXP(p, 0);
 										Main.getInstance().updatehp(p, false);
 										if(sender instanceof Player) {
-											sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + "➠ " + Messages.get("finished") + "!");
+											sender.sendMessage(Messages.get("finished"));
 										}
 									}
 									catch (NumberFormatException x) {
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
+										sender.sendMessage(Messages.get("invalid-arguments"));
 									}
 								} else {
 									sender.sendMessage(Messages.get("invalid-player"));
@@ -161,12 +161,12 @@ public class Commands implements CommandExecutor {
 							}
 							else
 							{
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("usage") + " ➠" + ChatColor.RED + "/" + label + " sethp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
+								sender.sendMessage(Messages.get("invalid-arguments"));
+								sender.sendMessage(Messages.get("help-usage") + " " + ChatColor.RED + "/" + label + " sethp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
 							}
 						}
 						else {
-							sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+							sender.sendMessage(Messages.get("no-permission"));
 						}
 					}
 					else
@@ -202,22 +202,22 @@ public class Commands implements CommandExecutor {
 											}
 
 											if(sender instanceof Player) {
-												sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + "➠ " + Messages.get("finished") + "!");
+												sender.sendMessage(Messages.get("finished"));
 											}
 										}
 										catch (NumberFormatException x) {
-											sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
+											sender.sendMessage(Messages.get("invalid-arguments"));
 										}
 
 									} else {
 										sender.sendMessage(Messages.get("invalid-player"));
 									}
 								} else {
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("usage") + " ➠" + ChatColor.RED + "/" + label + " addxp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
+									sender.sendMessage(Messages.get("invalid-arguments"));
+									sender.sendMessage(Messages.get("help-usage") + " " + ChatColor.RED + "/" + label + " addxp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
 								}
 							} else {
-								sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+								sender.sendMessage(Messages.get("no-permission"));
 							}
 
 						} else
@@ -233,16 +233,16 @@ public class Commands implements CommandExecutor {
 											{
 												int hp = Integer.valueOf(args[2]);
 												if(hp <= 0) {
-													sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
+													sender.sendMessage(Messages.get("invalid-arguments"));
 													return false;
 												}
 												p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(hp);
 												if(sender instanceof Player) {
-													sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + "➠ " + Messages.get("finished") + "!");
+													sender.sendMessage(Messages.get("finished"));
 												}
 											}
 											catch (NumberFormatException x) {
-												sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
+												sender.sendMessage(Messages.get("invalid-arguments"));
 											}
 										} else {
 											sender.sendMessage(Messages.get("invalid-player"));
@@ -250,12 +250,12 @@ public class Commands implements CommandExecutor {
 									}
 									else
 									{
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("usage") + " ➠" + ChatColor.RED + "/" + label + " tmphp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
+										sender.sendMessage(Messages.get("invalid-arguments"));
+										sender.sendMessage(Messages.get("help-usage") + " " + ChatColor.RED + "/" + label + " tmphp <" + Messages.get("help-player") + "> <" + Messages.get("help-number") + ">");
 									}
 								}
 								else {
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
+									sender.sendMessage(Messages.get("no-permission"));
 								}
 							} else
 
@@ -263,11 +263,8 @@ public class Commands implements CommandExecutor {
 									sender.sendMessage("§b" + Main.getInstance().getDescription().getFullName());
 								}
 								else {
-									sender.sendMessage("§4§l" + Messages.get("invalid-arguments"));
+									sender.sendMessage(Messages.get("invalid-arguments"));
 								}
-
-
-
 
 
 			}
