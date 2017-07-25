@@ -422,7 +422,7 @@ public class Main extends JavaPlugin implements Listener {
 		if(!firstStart && cfg.getBoolean("configuration.check-for-updates")) {
 			checkForUpdates();
 			if(updateAvailable) {
-				Bukkit.getConsoleSender().sendMessage("[" + getDescription().getName() + "] §3" + Messages.get("update-available"));
+				Bukkit.getConsoleSender().sendMessage("[" + getDescription().getName() + "] " + Messages.get("update-available"));
 			}
 		}
 	}
@@ -444,8 +444,8 @@ public class Main extends JavaPlugin implements Listener {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
 				@Override
 				public void run() {
-					p.sendMessage("§b===== §3" + getDescription().getName() + "§b " + Messages.get("update-available")
-					+ " =====");
+					p.sendMessage("§b===== §3" + getDescription().getName() + " " + Messages.get("update-available")
+					+ " §b=====");
 				}
 			}, 20);
 		}

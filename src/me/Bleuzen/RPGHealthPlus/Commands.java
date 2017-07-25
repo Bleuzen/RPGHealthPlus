@@ -35,7 +35,7 @@ public class Commands implements CommandExecutor {
 						Main.getInstance().waitSave();
 						Main.getInstance().saveplayers();
 						Main.getInstance().cfgReload();
-						sender.sendMessage(ChatColor.GREEN +""+ ChatColor.BOLD + Messages.get("configuration-reloaded"));
+						sender.sendMessage(Messages.get("configuration-reloaded"));
 					} else {
 						sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("no-permission"));
 					}
@@ -50,14 +50,14 @@ public class Commands implements CommandExecutor {
 								if (p != null)
 								{
 									if(!Main.getInstance().getplayers().contains(""+ p.getUniqueId())) {
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+										sender.sendMessage(Messages.get("invalid-player"));
 										return false;
 									}
 									int hp = Main.getInstance().getplayers().getInt(p.getUniqueId() + ".hp");
 									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + p.getName() + Messages.get("players-hp") + " ➠" + ChatColor.RED + " " + hp + " (" + String.valueOf((Double.valueOf(hp) / 2)).replace(".0", "") + (Main.getInstance().scaleHP ? " (" + Messages.get("scaled-to") + " " + String.valueOf((p.getHealthScale() / 2)).replace(".0", "") + ") " : " ") + Messages.get("gethp-command-hearts") + ")");
 								}
 								else {
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+									sender.sendMessage(Messages.get("invalid-player"));
 								}
 							}
 							else
@@ -79,7 +79,7 @@ public class Commands implements CommandExecutor {
 								if (p != null)
 								{
 									if(!Main.getInstance().getplayers().contains(""+ p.getUniqueId())) {
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+										sender.sendMessage(Messages.get("invalid-player"));
 										return false;
 									}
 									try
@@ -107,7 +107,7 @@ public class Commands implements CommandExecutor {
 										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
 									}
 								} else {
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+									sender.sendMessage(Messages.get("invalid-player"));
 								}
 							}
 							else
@@ -130,7 +130,7 @@ public class Commands implements CommandExecutor {
 								if (p != null)
 								{
 									if(!Main.getInstance().getplayers().contains(""+ p.getUniqueId())) {
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+										sender.sendMessage(Messages.get("invalid-player"));
 										return false;
 									}
 									try
@@ -156,7 +156,7 @@ public class Commands implements CommandExecutor {
 										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
 									}
 								} else {
-									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+									sender.sendMessage(Messages.get("invalid-player"));
 								}
 							}
 							else
@@ -177,7 +177,7 @@ public class Commands implements CommandExecutor {
 									Player p = Bukkit.getPlayer(args[1]);
 									if(p != null) {
 										if(!Main.getInstance().getplayers().contains(""+ p.getUniqueId())) {
-											sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+											sender.sendMessage(Messages.get("invalid-player"));
 											return false;
 										}
 										try
@@ -210,7 +210,7 @@ public class Commands implements CommandExecutor {
 										}
 
 									} else {
-										sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+										sender.sendMessage(Messages.get("invalid-player"));
 									}
 								} else {
 									sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
@@ -245,7 +245,7 @@ public class Commands implements CommandExecutor {
 												sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-arguments") + "!");
 											}
 										} else {
-											sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+											sender.sendMessage(Messages.get("invalid-player"));
 										}
 									}
 									else

@@ -93,7 +93,7 @@ public class Statusbar implements CommandExecutor {
 
 					}
 				} else {
-					sender.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + Messages.get("error") + " ➠" + ChatColor.RED + " " + Messages.get("invalid-player") + "!");
+					sender.sendMessage(Messages.get("invalid-player"));
 				}
 
 			}

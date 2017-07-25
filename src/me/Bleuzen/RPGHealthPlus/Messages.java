@@ -19,10 +19,12 @@ public class Messages {
 	public static void reload() {
 		mcfg = YamlConfiguration.loadConfiguration(file);
 
-		mcfg.addDefault("update-available", "Update is available!");
-		mcfg.addDefault("configuration-reloaded", "Configuration reloaded!");
+		mcfg.addDefault("update-available", "§bUpdate is available!");
+		mcfg.addDefault("configuration-reloaded", "§a§lConfiguration reloaded!");
 		mcfg.addDefault("gethp-command-hearts", "Hearts");
-		mcfg.addDefault("invalid-player", "Invalid player");
+		mcfg.addDefault("invalid-player", "§c§lInvalid player!");
+
+		//TODO
 		mcfg.addDefault("no-permission", "No permission");
 		mcfg.addDefault("invalid-arguments", "Invalid arguments");
 		mcfg.addDefault("help-player", "player");
