@@ -30,6 +30,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin implements Listener {
 
+	//TODO: This plugin currently only supports <= MC 1.12 mobs.
+	// Add all mobs added in 1.13+
+
 	private static Main instance;
 
 	//private static final String buildVersion = "v1_12_R1";
