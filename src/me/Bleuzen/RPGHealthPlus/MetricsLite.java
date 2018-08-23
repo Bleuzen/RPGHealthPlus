@@ -5,7 +5,9 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -16,6 +18,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
@@ -29,12 +33,16 @@ import org.json.simple.JSONObject;
 public class MetricsLite {
 
 	static {
-		// Maven's Relocate is clever and changes strings, too. So we have to use this little "trick" ... :D
-		final String defaultPackage = new String(new byte[] { 'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's' });
-		final String examplePackage = new String(new byte[] { 'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e' });
-		// We want to make sure nobody just copy & pastes the example and use the wrong package names
-		if (MetricsLite.class.getPackage().getName().equals(defaultPackage) || MetricsLite.class.getPackage().getName().equals(examplePackage)) {
-			throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
+		// You can use the property to disable the check in your test environment
+		if (System.getProperty("bstats.relocatecheck") == null || !System.getProperty("bstats.relocatecheck").equals("false")) {
+			// Maven's Relocate is clever and changes strings, too. So we have to use this little "trick" ... :D
+			final String defaultPackage = new String(
+					new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's', '.', 'b', 'u', 'k', 'k', 'i', 't'});
+			final String examplePackage = new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
+			// We want to make sure nobody just copy & pastes the example and use the wrong package names
+			if (MetricsLite.class.getPackage().getName().equals(defaultPackage) || MetricsLite.class.getPackage().getName().equals(examplePackage)) {
+				throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
+			}
 		}
 	}
 
@@ -146,7 +154,6 @@ public class MetricsLite {
 	 *
 	 * @return The plugin specific data.
 	 */
-	@SuppressWarnings("unchecked")
 	public JSONObject getPluginData() {
 		JSONObject data = new JSONObject();
 
@@ -166,10 +173,19 @@ public class MetricsLite {
 	 *
 	 * @return The server specific data.
 	 */
-	@SuppressWarnings("unchecked")
 	private JSONObject getServerData() {
 		// Minecraft specific data
-		int playerAmount = Bukkit.getOnlinePlayers().size();
+		int playerAmount;
+		try {
+			// Around MC 1.8 the return type was changed to a collection from an array,
+			// This fixes java.lang.NoSuchMethodError: org.bukkit.Bukkit.getOnlinePlayers()Ljava/util/Collection;
+			Method onlinePlayersMethod = Class.forName("org.bukkit.Server").getMethod("getOnlinePlayers");
+			playerAmount = onlinePlayersMethod.getReturnType().equals(Collection.class)
+					? ((Collection<?>) onlinePlayersMethod.invoke(Bukkit.getServer())).size()
+							: ((Player[]) onlinePlayersMethod.invoke(Bukkit.getServer())).length;
+		} catch (Exception e) {
+			playerAmount = Bukkit.getOnlinePlayers().size(); // Just use the new method if the Reflection failed
+		}
 		int onlineMode = Bukkit.getOnlineMode() ? 1 : 0;
 		String bukkitVersion = Bukkit.getVersion();
 		bukkitVersion = bukkitVersion.substring(bukkitVersion.indexOf("MC: ") + 4, bukkitVersion.length() - 1);
@@ -201,7 +217,6 @@ public class MetricsLite {
 	/**
 	 * Collects the data and sends it afterwards.
 	 */
-	@SuppressWarnings("unchecked")
 	private void submitData() {
 		final JSONObject data = getServerData();
 
@@ -210,13 +225,14 @@ public class MetricsLite {
 		for (Class<?> service : Bukkit.getServicesManager().getKnownServices()) {
 			try {
 				service.getField("B_STATS_VERSION"); // Our identifier :)
-			} catch (NoSuchFieldException ignored) {
-				continue; // Continue "searching"
-			}
-			// Found one!
-			try {
-				pluginData.add(service.getMethod("getPluginData").invoke(Bukkit.getServicesManager().load(service)));
-			} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) { }
+
+				for (RegisteredServiceProvider<?> provider : Bukkit.getServicesManager().getRegistrations(service)) {
+					try {
+						pluginData.add(provider.getService().getMethod("getPluginData").invoke(provider.getProvider()));
+					} catch (NullPointerException | NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
+					}
+				}
+			} catch (NoSuchFieldException ignored) { }
 		}
 
 		data.put("plugins", pluginData);
