@@ -6,26 +6,13 @@ import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
-import net.minecraft.server.v1_12_R1.EnumParticle;
-import net.minecraft.server.v1_12_R1.PacketPlayOutWorldParticles;
-
 public class Utils {
 
 	private static DecimalFormat doubleFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
-
-	static void showParticles(Player p) {
-		for (Player pa : Bukkit.getOnlinePlayers()) {
-			((CraftPlayer) pa).getHandle().playerConnection.sendPacket(new PacketPlayOutWorldParticles(
-					EnumParticle.HEART, true, (float) p.getLocation().getX(), (float) p.getLocation().getY() + 1.0F,
-					(float) p.getLocation().getZ(), 1.0F, 1.0F, 1.0F, 1.0F, 10, null));
-		}
-	}
 
 	static void showHologram(Location loc, String txt) {
 		final Hologram holo = HologramsAPI.createHologram(Main.getInstance(), loc);

@@ -32,9 +32,8 @@ public class Main extends JavaPlugin implements Listener {
 
 	private static Main instance;
 
-	//TODO: Update
-	private static final String buildVersion = "v1_12_R1";
-	static final String runningVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+	//private static final String buildVersion = "v1_12_R1";
+	//static final String runningVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 
 	private List<Entity> monsterspawner;
 
@@ -78,32 +77,20 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		if(buildVersion.equals(runningVersion)) {
-			if (getplayers().contains("player-storage")) {
-				Bukkit.getConsoleSender().sendMessage("[" + getDescription().getName() + "] §cYou are using an old database version. You can update/convert your 'players.yml' using this application: http://goo.gl/oZSSg8");
-				setEnabled(false);
-			} else {
+		instance = this;
 
-				instance = this;
+		getCommand("rpghp").setExecutor(new Commands());
+		getCommand("hp").setExecutor(new Statusbar());
 
-				getCommand("rpghp").setExecutor(new Commands());
-				getCommand("hp").setExecutor(new Statusbar());
+		getServer().getPluginManager().registerEvents(this, this);
 
-				getServer().getPluginManager().registerEvents(this, this);
+		useHolographicDisplays = Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
 
-				useHolographicDisplays = Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
+		cfgReload();
+		saveConfig();
 
-				cfgReload();
-				saveConfig();
-
-				//MetricsLite metrics =
-				new MetricsLite(this);
-
-			}
-		} else {
-			Bukkit.getConsoleSender().sendMessage("[" + getDescription().getName() + "] §cThis version only works on server version " + buildVersion + ". You are running " + runningVersion + ".");
-			setEnabled(false);
-		}
+		//MetricsLite metrics =
+		new MetricsLite(this);
 	}
 
 	public static Main getInstance() {
@@ -191,11 +178,6 @@ public class Main extends JavaPlugin implements Listener {
 
 		if(sounds) {
 			p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.5F);
-		}
-
-		/* Particles */
-		if(cfg.getBoolean("configuration.levelup-particles")) {
-			Utils.showParticles(p);
 		}
 
 		p.sendMessage((damageMultiplier ? (p.hasPermission("rpghealth.damagemultiplier") ? Messages.get("hp-and-melee-damage-levelled-up") : Messages.get("hp-levelled-up")) : Messages.get("hp-levelled-up")) + "!");

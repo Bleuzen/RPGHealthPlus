@@ -17,7 +17,6 @@ configuration:
   use-groups-permissions: false
   heal-after-world-change: false
   heal-after-level-up: true
-  levelup-particles: true
   enable-sounds: true
   check-for-updates: true
 mobs-xp:

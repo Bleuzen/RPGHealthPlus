@@ -21,15 +21,13 @@ public class UpdateChecker {
 			String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
 			con.disconnect();
 
-			String rev = version.substring(version.lastIndexOf(" ") + 1);
+			//String rev = version.substring(version.lastIndexOf(" ") + 1);
 
-			if(rev.equals(Main.runningVersion)) {
-				int onlineVersion = toVersionNumber(version.substring(0, version.indexOf(" ")));
-				int localVersion = toVersionNumber(Main.getInstance().getDescription().getVersion());
+			int onlineVersion = toVersionNumber(version.substring(0, version.indexOf(" ")));
+			int localVersion = toVersionNumber(Main.getInstance().getDescription().getVersion());
 
-				if(onlineVersion > localVersion) {
-					return true;
-				}
+			if(onlineVersion > localVersion) {
+				return true;
 			}
 		} catch (Exception e) {
 			//e.printStackTrace();
