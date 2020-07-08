@@ -452,7 +452,7 @@ public class Main extends JavaPlugin implements Listener {
 			if(updateChecker == null) {
 				updateChecker = new UpdateChecker();
 			}
-			updateAvailable = updateChecker.updateAvailable();
+			updateAvailable = updateChecker.checkUpdateAvailable();
 		}
 	}
 

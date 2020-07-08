@@ -1,6 +1,8 @@
 package me.Bleuzen.RPGHealthPlus;
 
-import java.io.BufferedReader;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -8,35 +10,70 @@ import java.util.logging.Level;
 
 public class UpdateChecker {
 
-	// resource ID on spigotmc.org
-	private final String resource = "6176";
+	private static final String UPDATER_URL = "https://raw.githubusercontent.com/Bleuzen/metadata/master/rpghealthplus/v1/data.json";
 
-	boolean updateAvailable() {
+	boolean checkUpdateAvailable() {
 		Main.getInstance().getLogger().log(Level.INFO, "Checking for updates ...");
+
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php").openConnection();
-			con.setDoOutput(true);
-			con.setRequestMethod("POST");
-			con.getOutputStream().write(("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=" + resource).getBytes("UTF-8"));
-			String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-			con.disconnect();
+			JSONObject json = fetchJSON(UPDATER_URL);
 
-			//String rev = version.substring(version.lastIndexOf(" ") + 1);
+			String latestVersion = json.get("version").toString();
+//			String downloadUrl = ((JSONObject)json.get("download")).get("url").toString();
 
-			int onlineVersion = toVersionNumber(version.substring(0, version.indexOf(" ")));
-			int localVersion = toVersionNumber(Main.getInstance().getDescription().getVersion());
+			Main.getInstance().getLogger().log(Level.INFO, "Newest version: " + latestVersion);
 
-			if(onlineVersion > localVersion) {
-				return true;
-			}
+			String localVersion = Main.getInstance().getDescription().getVersion();
+
+			return compare(localVersion, latestVersion);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			Main.getInstance().getLogger().log(Level.WARNING, "Failed to check for updates.");
+			e.printStackTrace();
 		}
 		return false;
 	}
 
-	private static int toVersionNumber(String in) {
-		return Integer.parseInt(in.replaceAll("[^0-9]", ""));
+	private JSONObject fetchJSON(String url) throws Exception {
+		HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+		con.setRequestMethod("GET");
+		con.setConnectTimeout(5000);
+		con.setReadTimeout(5000);
+
+		InputStream inputStream = con.getInputStream();
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject)jsonParser.parse(
+				new InputStreamReader(inputStream, "UTF-8"));
+		inputStream.close();
+		return jsonObject;
+	}
+
+	private String toVersionString(String version) {
+		return version.replaceAll("[^0-9.]", "");
+	}
+
+	private boolean compare(String local, String online) {
+		local = toVersionString(local);
+		online = toVersionString(online);
+
+		String[] valsLocal = local.split("\\.");
+		String[] valsOnline = online.split("\\.");
+
+		// find the first non-equal number
+		int i = 0;
+		while(i < valsLocal.length && i < valsOnline.length && valsLocal[i].equals(valsOnline[i])) {
+			i++;
+		}
+
+		boolean newer;
+		if(i < valsLocal.length && i < valsOnline.length) {
+			int numLocal = Integer.parseInt(valsLocal[i]);
+			int numOnline = Integer.parseInt(valsOnline[i]);
+			newer = numOnline > numLocal;
+		} else {
+			newer = valsOnline.length > valsLocal.length;
+		}
+
+		return newer;
 	}
 
 }
