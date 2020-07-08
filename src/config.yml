@@ -71,8 +71,8 @@ mobs-xp:
   ZOMBIE_HORSE: 5
   ZOMBIE_VILLAGER: 6
 names-xp:
-- examplemobname1 = 8
-- examplemobname2 = 6
+  - examplemobname1 = 8
+  - examplemobname2 = 6
 nonaffected-worlds:
-- exampleworldname1
-- exampleworldname2
+  - exampleworldname1
+  - exampleworldname2
