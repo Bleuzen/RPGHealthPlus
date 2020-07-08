@@ -93,7 +93,7 @@ public class Main extends JavaPlugin implements Listener {
 		saveConfig();
 
 		//MetricsLite metrics =
-		new MetricsLite(this);
+		new MetricsLite(this, 586);
 	}
 
 	public static Main getInstance() {
