@@ -1,6 +1,6 @@
 name: RPGHealthPlus
 main: me.Bleuzen.RPGHealthPlus.Main
-version: 1.4.9
+version: 1.5.0
 api-version: 1.16
 author: Bleuzen
 softdepend: [HolographicDisplays]
