@@ -1,0 +1,5 @@
+jar: spigot-*.jar
+source: https://hub.spigotmc.org/jenkins/job/BuildTools/
+
+jar: HolographicDisplays.jar
+source: https://dev.bukkit.org/projects/holographic-displays
