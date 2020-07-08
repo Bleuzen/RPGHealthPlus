@@ -1,6 +1,8 @@
 name: RPGHealthPlus
 main: me.Bleuzen.RPGHealthPlus.Main
-version: 1.4.8
+version: 1.4.9
+api-version: 1.16
+author: Bleuzen
 softdepend: [HolographicDisplays]
 description: Adds the ability to levelup your health!
 commands:
