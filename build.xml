@@ -1,0 +1,35 @@
+<project name="RPGHealthPlus" basedir="." default="build">
+
+    <property name="src.dir" value="src"/>
+
+    <property name="lib.dir" value="lib"/>
+
+    <property name="build.dir" value="build"/>
+
+    <property name="classes.dir" value="build/classes"/>
+
+    <property name="main-class" value="me.Bleuzen.RPGHealthPlus.Main"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <javac target="1.8" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
+
+    <target name="build" depends="compile">
+        <mkdir dir="${build.dir}"/>
+        <jar destfile="${build.dir}/${ant.project.name}.jar" basedir="${classes.dir}" duplicate="preserve">
+            <fileset dir="${src.dir}">
+                <include name="**.yml"/>
+            </fileset>
+        </jar>
+    </target>
+
+</project>
